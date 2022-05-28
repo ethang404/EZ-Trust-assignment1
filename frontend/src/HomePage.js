@@ -1,7 +1,10 @@
 import {useState} from "react";
+
 import { TextField,Grid,Button, Switch } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Auth from "./Auth";
+import Register from "./Register";
 
 export default function Home(){
     //Add onChange to Switch
@@ -9,9 +12,24 @@ export default function Home(){
 	const [password, setPassword] = useState("");
     const [darkMode, setDarkMode] = useState(true);
 
-    function handleSubmit(event){
-        event.preventDefault();
-    }
+    const handleSubmit = async (event) => {
+		event.preventDefault(); //idk what this does
+		setUsername(username);
+		setPassword(password);
+        try{
+            const response = await fetch("http://localhost:8000/auth/" + username + "/" + password) //redirect to Auth depending on result of response
+            //import status and response on backend->consult techwithtim github
+            if (response.ok){
+                <Auth prop = {username}/>
+            }
+            else{
+                <Register />
+            }
+        }
+        catch (err) {
+            console.log(err);
+          }
+	};
 
     const darkTheme = createTheme({
         palette: {
@@ -44,7 +62,7 @@ export default function Home(){
                     <TextField id="outlined-password-input" label="Password" type="password" required value = {password} onChange={(e) => setPassword(e.target.value)} />
                 </Grid>
                 <Grid item xs = {12}>
-                    <Button>Login</Button>
+                    <Button onClick = {handleSubmit}>Login</Button>
                 </Grid>
             </Grid>
         </ThemeProvider>
