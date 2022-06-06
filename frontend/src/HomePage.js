@@ -64,8 +64,9 @@ export default function Home(){
                 <Grid item xs = {12}>
                     <TextField id="outlined-password-input" label="Password" type="password" required value = {password} onChange={(e) => setPassword(e.target.value)} />
                 </Grid>
-                <Grid item xs = {12}>
+                <Grid item xs = {6}>
                     <Button onClick = {handleSubmit}>Login</Button>
+                    <a href = "/register">Sign up Here</a>
                 </Grid>
             </Grid>
         </ThemeProvider>
