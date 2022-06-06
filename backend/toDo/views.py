@@ -10,9 +10,9 @@ import random
 @api_view(['GET'])
 def authenticate(request,username,password): #consider returning HTTP status codes and do response.ok on front end?
     if User.objects.filter(username = username,password = password).exists():
-        return Response(True)
+        return HttpResponse(status=201)
     else:
-        return Response(False)
+        return HttpResponse(status=400)
 
 @api_view(['POST','GET'])
 def register(request,username,password):

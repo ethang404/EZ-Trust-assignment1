@@ -5,11 +5,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Auth from "./Auth";
 import Register from "./Register";
+import {useNavigate} from "react-router-dom";
 
 export default function Home(){
+    let navigate = useNavigate();
     //Add onChange to Switch
     const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+
     const [darkMode, setDarkMode] = useState(true);
 
     const handleSubmit = async (event) => {
@@ -18,12 +21,12 @@ export default function Home(){
 		setPassword(password);
         try{
             const response = await fetch("http://localhost:8000/auth/" + username + "/" + password) //redirect to Auth depending on result of response
-            //import status and response on backend->consult techwithtim github
             if (response.ok){
-                <Auth prop = {username}/>
+                console.log("Pog")
+                navigate("/"+username+"/"+password);
             }
             else{
-                <Register />
+                console.log("not poggy woggy");
             }
         }
         catch (err) {
